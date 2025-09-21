@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUCHA - Kombucha Final Ultra-Pro</title>
+<style>
+body {margin:0; font-family:'Segoe UI',sans-serif; background:#fff7ed; display:flex; flex-direction:column; align-items:center; padding:24px;}
+.container {max-width:900px; width:100%; display:flex; flex-direction:column; gap:2rem;}
+header {text-align:center; margin-bottom:2rem;}
+header h1 {font-size:3rem; font-weight:800; color:#b45309; margin:0;}
+header p {margin:0.25rem 0; color:#4b5563; font-style:italic; font-size:1.2rem;}
+.variants {display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;}
+.variant-card {background:white; border-radius:1rem; box-shadow:0 5px 15px rgba(0,0,0,0.1); width:220px; text-align:center; padding:1rem; position:relative; cursor:pointer; overflow:hidden; transition:0.3s;}
+.variant-card:hover {transform:translateY(-5px) scale(1.05); box-shadow:0 12px 25px rgba(0,0,0,0.2);}
+.variant-card img {width:100%; border-radius:0.75rem; margin-bottom:0.5rem;}
+.variant-card .hover-img {position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:0.3s; border-radius:1rem;}
+.variant-card:hover .hover-img {opacity:0.95;}
+.variant-card h3 {margin:0; font-size:1.25rem; color:#374151; position:relative; z-index:1;}
+.variant-card p.price {margin:0.25rem 0; font-weight:700; font-size:1.1rem; position:relative; z-index:1;}
+.variant-card p.desc {margin:0.25rem 0; font-size:0.875rem; color:#6b7280; position:relative; z-index:1;}
+.quantity-controls {display:flex; gap:0.5rem; align-items:center; justify-content:center; margin-top:0.5rem; position:relative; z-index:1;}
+.quantity-controls button {padding:0.3rem 0.8rem; border:1px solid #d1d5db; border-radius:0.5rem; background:white; font-size:1.2rem; transition:0.2s; cursor:pointer;}
+.quantity-controls button:hover:not(:disabled){background-color:#f3f4f6;}
+.quantity-controls button:disabled{opacity:0.5; cursor:not-allowed;}
+.quantity-display {width:2.5rem; text-align:center; font-weight:600; font-size:1.25rem;}
+.discount-badge {position:absolute; top:10px; left:10px; background:#dc2626; color:white; font-weight:700; font-size:0.8rem; padding:0.25rem 0.5rem; border-radius:0.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:2;}
+.order-section {background:white; border-radius:1rem; box-shadow:0 5px 15px rgba(0,0,0,0.1); padding:1rem; display:flex; flex-direction:column; gap:1rem;}
+select, input[type=text] {width:100%; padding:0.5rem; border:1px solid #d1d5db; border-radius:0.5rem; font-size:1rem;}
+.total-text {font-weight:700; font-size:1.2rem; color:#b45309; transition: background 0.3s; padding:0.25rem; border-radius:0.25rem;}
+.summary-section {background:white; border-radius:1rem; box-shadow:0 5px 15px rgba(0,0,0,0.1); padding:1rem; white-space:pre-wrap; font-family:monospace; font-size:0.95rem; line-height:1.4; transition: background 0.3s;}
+button.whatsapp-btn {background-color:#f59e0b; color:white; font-weight:700; padding:0.5rem 1rem; border:none; border-radius:1rem; font-size:1rem; cursor:pointer; transition:0.3s; margin-top:0.5rem; box-shadow:0 5px 12px rgba(0,0,0,0.2);}
+button.whatsapp-btn:hover {background-color:#d97706;}
+footer {margin-top:2rem; text-align:center; font-size:0.875rem; color:#6b7280;}
+footer a {color:#b45309; text-decoration:none; margin:0 0.25rem;}
+footer a:hover {text-decoration:underline;}
+@media(max-width:600px){.variants{flex-direction:column; align-items:center;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>JUCHA</h1>
+  <p>Boost Your Day</p>
+  <p>Ready sekitar Unair Kampus C</p>
+</header>
+
+<div class="container">
+  <div class="variants" id="variantsContainer">
+    <!-- Classic -->
+    <div class="variant-card" data-variant="classic">
+      <div class="discount-badge">-20%</div>
+      <img src="ja.jpg" alt="Classic Kombucha">
+      <img src="ja.jpg" class="hover-img" alt="Classic Preview">
+      <h3>Classic</h3>
+      <p class="price"><span style="text-decoration:line-through; color:#9ca3af; font-size:0.9rem;">Rp10.000</span> <span style="color:#b45309; font-weight:700;">Rp8.000</span></p>
+      <p class="desc">Kombucha klasik 200ml, rasa original segar untuk energi harian.</p>
+      <div class="quantity-controls">
+        <button class="decrease">-</button>
+        <span class="quantity-display">0</span>
+        <button class="increase">+</button>
+      </div>
+    </div>
+    <!-- Strawberry -->
+    <div class="variant-card" data-variant="strawberry">
+      <img src="jb.jpg" alt="Strawberry Kombucha">
+      <img src="jb.jpg" class="hover-img" alt="Strawberry Preview">
+      <h3>Strawberry</h3>
+      <p class="price">Rp13.000</p>
+      <p class="desc">Rasa strawberry 200ml manis asam, kaya probiotik, segar diminum kapan saja.</p>
+      <div class="quantity-controls">
+        <button class="decrease">-</button>
+        <span class="quantity-display">0</span>
+        <button class="increase">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-section">
+    <label>Nama Pembeli</label>
+    <input type="text" id="nameInput" placeholder="Masukkan nama anda">
+    <label>Metode Pembayaran</label>
+    <select id="paymentSelect">
+      <option value="QRIS">QRIS</option>
+      <option value="COD">COD</option>
+    </select>
+    <p id="totalText" class="total-text">Total: Rp0</p>
+  </div>
+
+  <div class="summary-section" id="summaryText">Ringkasan akan muncul di sini.</div>
+  <button id="whatsappBtn" class="whatsapp-btn">Lanjutkan Pembayaran via WhatsApp</button>
+</div>
+
+<footer>
+  <p>Hubungi CP: +62 812-4299-8231 apabila terjadi kendala</p>
+  <p>Follow us:
+    <a href="https://instagram.com/jucha.official" target="_blank">Instagram</a> |
+    <a href="https://tiktok.com/@jucha.official" target="_blank">TikTok</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  const PRICES = {classic:{one:10000, promo:8000}, strawberry:{one:13000}};
+  const PHONE = "6281242998231";
+  const nameInput = document.getElementById('nameInput');
+  const paymentSelect = document.getElementById('paymentSelect');
+  const totalText = document.getElementById('totalText');
+  const summaryText = document.getElementById('summaryText');
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  const variantCards = document.querySelectorAll('.variant-card');
+  let quantities = {classic:0, strawberry:0};
+
+  // 🔗 Ganti dengan URL Web App Google Apps Script kamu
+  const SHEET_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; 
+
+  function calcTotal(){
+    let total=0;
+    for(const v in quantities){
+      const qty=quantities[v];
+      if(v==='classic'){ total+=qty*PRICES.classic.promo; }
+      else{ total+=qty*PRICES[v].one; }
+    }
+    return total;
+  }
+
+  function formatRp(n){ return new Intl.NumberFormat("id-ID").format(n); }
+  function highlightTotal(){ totalText.style.background="#fde68a"; setTimeout(()=>{totalText.style.background="transparent";},300); }
+
+  function generateSummary(){
+    const name=nameInput.value.trim()||"[Nama Pembeli]";
+    const payment=paymentSelect.value;
+    const today=new Date();
+    const tanggal = `${today.getDate().toString().padStart(2,'0')}-${(today.getMonth()+1).toString().padStart(2,'0')}-${today.getFullYear()}`;
+    let summary = `JUCHA\n============================\nNama Pembeli: ${name}\nTanggal: ${tanggal}\n----------------------------\n`;
+    for(const v in quantities){
+      if(quantities[v]>0){
+        const qty=quantities[v];
+        if(v==='classic'){
+          const normalPrice=qty*PRICES.classic.one;
+          const promoTotal=qty*PRICES.classic.promo;
+          const discount=normalPrice-promoTotal;
+          summary+=`- Classic 200ml: ${qty} botol\n  Harga normal: Rp${formatRp(normalPrice)}\n  Diskon: -Rp${formatRp(discount)}\n  Harga bayar: Rp${formatRp(promoTotal)}\n`;
+        } else {
+          const totalPrice=qty*PRICES[v].one;
+          summary+=`- Strawberry 200ml: ${qty} botol\n  Harga bayar: Rp${formatRp(totalPrice)}\n`;
+        }
+      }
+    }
+    summary+=`----------------------------\nMetode Pembayaran: ${payment}\nTotal: Rp${formatRp(calcTotal())}\n============================`;
+    highlightTotal();
+    return summary;
+  }
+
+  function updateUI(){
+    variantCards.forEach(card=>{
+      const variant=card.dataset.variant;
+      card.querySelector('.quantity-display').textContent=quantities[variant];
+    });
+    totalText.textContent=`Total: Rp${formatRp(calcTotal())}`;
+    summaryText.textContent=generateSummary();
+  }
+
+  function sendToSheet(){
+    const orderData = {
+      nama: nameInput.value.trim(),
+      varian: Object.keys(quantities).map(v => `${v}:${quantities[v]}`).join(", "),
+      jumlah: calcTotal(),
+      metode: paymentSelect.value
+    };
+    fetch(SHEET_URL, {
+      method: "POST",
+      body: JSON.stringify(orderData)
+    })
+    .then(res => res.text())
+    .then(txt => console.log("✅ Data tersimpan:", txt))
+    .catch(err => console.error("❌ Gagal simpan:", err));
+  }
+
+  variantCards.forEach(card=>{
+    const variant=card.dataset.variant;
+    const decreaseBtn=card.querySelector('.decrease');
+    const increaseBtn=card.querySelector('.increase');
+    decreaseBtn.addEventListener('click',()=>{ if(quantities[variant]>0){quantities[variant]--; updateUI();} });
+    increaseBtn.addEventListener('click',()=>{ quantities[variant]++; updateUI(); });
+  });
+
+  nameInput.addEventListener('input', updateUI);
+  paymentSelect.addEventListener('change', updateUI);
+
+  whatsappBtn.addEventListener('click',()=>{
+    if(!nameInput.value.trim()){ alert("Mohon isi Nama Pembeli"); nameInput.focus(); return; }
+    sendToSheet();
+    const summary=encodeURIComponent(summaryText.textContent);
+    const url1=`https://wa.me/${PHONE}?text=${summary}`;
+    const url2=`https://api.whatsapp.com/send?phone=${PHONE}&text=${summary}`;
+    const newWin=window.open(url1,"_blank");
+    if(!newWin){ window.open(url2,"_blank"); }
+  });
+
+  updateUI();
+})();
+</script>
+
+</body>
+</html>
